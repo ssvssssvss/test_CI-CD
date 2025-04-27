@@ -1,0 +1,19 @@
+# .github/workflows/ci.yml
+name: Simple CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run a one-line script
+      run: echo "🎉 Пайплайн запущен успешно!"
