@@ -1,5 +1,32 @@
-/
-├── Dockerfile
-└── .github/
-    └── workflows/
-        └── build-and-test.yml
+name: Build and Test Docker Image
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Это шаг, который клонирует репозиторий
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3  # Это шаг для установки Docker
+
+      - name: Build Docker Image
+        run: |
+          docker build -t my-test-image .  # Вот тут происходит сама сборка Docker-образа
+
+      - name: Run Docker Container and capture output
+        run: |
+          docker run --rm my-test-image > container_output.log  # Запуск контейнера и вывод в лог
+
+      - name: Upload container output log as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-log
+          path: container_output.log  # Загружаем логи как артефакт
