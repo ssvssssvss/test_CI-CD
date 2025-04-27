@@ -29,4 +29,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: container-log
-          path: container_output.log  # Загружаем логи как артефакт
+          path: container_output.log
